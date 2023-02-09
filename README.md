@@ -41,7 +41,7 @@ They are two categories of containers :
 > The std::stack class is a container adaptor that gives the programmer the functionality of a stack - specifically, a LIFO (last-in, first-out) data structure.
 > The class template acts as a wrapper to the underlying container - only a specific set of functions is provided. The stack pushes and pops the element from the back of the underlying container, known as the top of the stack.
 
-
+Page 507 of the ISO Norm (23.2.3.3 Template class stack)
 
 
 #### (2) Some additional iterators and functions
