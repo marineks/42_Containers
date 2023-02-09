@@ -1,20 +1,23 @@
-#include <vector> // TODO : changer quand Vector sera fait !
+#ifndef STACK_HPP
+# define STACK_HPP
+
+# include <vector> // TODO : changer quand Vector sera fait !
 
 namespace ft {
   template<class T, class Container = std::vector<T> >
   class stack {
 	protected:
-			container c;
+			Container c;
 	
 	public:
 		/* MEMBER TYPES*/
 		typedef typename Container::value_type		value_type;
 		typedef typename Container::size_type		size_type;
-		typedef typename Container					container_type;
+		typedef			 Container					container_type;
 
 		/* CONSTRUCTORS & DESTRUCTOR */
-		explicit stack (){}; // default
-		explicit stack (const container_type& ctnr = container_type()){}; // copy
+		// explicit stack (){}; // default
+		explicit stack (const Container& = Container()){}; // copy
 		~stack (){}; // desctructor
 
 		/* MEMBER FUNCTIONS */
@@ -50,39 +53,41 @@ namespace ft {
 template <class T, class Container>
 bool ft::operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs == c.rhs) ? true : false;
+	(lhs == rhs) ? true : false;
 }
 
 
 template <class T, class Container>
 bool ft::operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs < c.rhs) ? true : false;
+	(lhs < rhs) ? true : false;
 }
 
 
 template <class T, class Container>
 bool ft::operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs != c.rhs) ? true : false;
+	(lhs != rhs) ? true : false;
 }
 
 
 template <class T, class Container>
 bool ft::operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs > c.rhs) ? true : false;
+	(lhs > rhs) ? true : false;
 }
 
 
 template <class T, class Container>
 bool ft::operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs >= c.rhs) ? true : false;
+	(lhs >= rhs) ? true : false;
 }
 
 template <class T, class Container>
 bool ft::operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 {
-	(c.lhs <= c.rhs) ? true : false;
+	(lhs <= rhs) ? true : false;
 }
+
+#endif
