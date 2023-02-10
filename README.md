@@ -139,8 +139,52 @@ Et ainsi de suite ! Si on a, pour x raisons, une situation où il y a deux boucl
 
 Page 507 of the ISO Norm (23.2.3.3 Template class stack)
 
+RAS, comprendre que stack a un underlying container c, et que du coup, recoder les fonctions membres (type empty(), pop(), top(), etc.) revient à juste appeler ces fonctions sur le container c.
 
 #### (2) Some additional iterators and functions
+
+#### Quick definition of iterators
+> "Iterators are a generalization of pointers that allow a C++ program to work with different data structures
+(containers) in a uniform manner. This International Standard defines five categories of iterators, according to the operations
+defined on them: input iterators, output iterators, forward iterators, bidirectional iterators and random
+access iterators, as shown in table 71" [(Norme ISO IEC 14882/1998)](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf)
+
+<p align="middle">
+<img src="assets/iter_hierarchy.png"  width="60%">
+</p>
+
+=> In short, the iterators must satisfy all the requirements of the iterators quoted to their **right**.
+
+```cpp
+namespace ft {
+
+	template<class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&> 
+	struct iterator;
+	
+	struct input_iterator_tag {};
+	struct output_iterator_tag {};
+	struct forward_iterator_tag: public input_iterator_tag {};
+	struct bidirectional_iterator_tag: public forward_iterator_tag {};
+	struct random_access_iterator_tag: public bidirectional_iterator_tag {};
+}
+```
+
+**For every iterator type, a corresponding specialization of iterator_traits class template shall be defined**, with at least the following member types defined:
+<p align="middle">
+<img src="assets/members_iter.png"  width="70%">
+</p>
+
+
+#### a. Iterator traits 
+(Page 542 of the ISO Norm (24.3.1 Template class stack))
+
+TODO : point sur typedef et typename à faire
+
+std::ptrdiff_t is the signed integer type of the result of subtracting two pointers. https://en.cppreference.com/w/cpp/types/ptrdiff_t
+
+Resources :
+- [Iterator traits page on cplusplus](https://cplusplus.com/reference/iterator/iterator_traits/)
+- [Iterator traits page on cppreference](https://en.cppreference.com/w/cpp/iterator/iterator_traits)
 
 #### (3) Vector
 

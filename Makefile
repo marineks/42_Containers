@@ -4,7 +4,10 @@ NAME_TEST	= test_containers
 
 # HEADERS
 INC_DIR 	= ./includes/
-INC_FILES	= Stack.hpp
+INC_FILES	= Stack.hpp 			\
+				iterator.hpp		\
+				iterator_traits.hpp	\
+				
 INCLUDE		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 # SOURCES
