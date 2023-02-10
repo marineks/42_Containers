@@ -1,37 +1,87 @@
-NAME		= mycontainers
+# EXECUTABLE
+NAME		= ft_containers
+NAME_TEST	= test_containers
 
-SRCS		= main.cpp
+# HEADERS
+INC_DIR 	= ./includes/
+INC_FILES	= Stack.hpp
+INCLUDE		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
-DIR_SRCS	= srcs/
+# SOURCES
+SRC_DIR		= ./srcs
+SRC_FILES	= main.cpp
 
-DIR_OBJS	= objs/
+# TEST
+TEST_DIR	= objs_test
+STD_OBJS	= $(addprefix $(TEST_DIR)/, $(SRC_FILES:.cpp=.o))
 
-OBJS		= ${SRCS:%.cpp=${DIR_OBJS}%.o}
+# OBJS
+OBJS_DIR	= objs
+OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.cpp=.o))
 
-CXX			= c++
+# COMMANDS
+RM			= rm -rf
+CC			= c++
 
-DEP			= ${OBJS:%.o=%.d}
+# COLORS
+RESET		=	\033[0m
+RED			=	\033[1;31m
+GREEN		=	\033[1;32m
+YELLOW		=	\033[1;33m
+BLUE		=	\033[1;34m
+WHITE		=	\033[1;37m
+ORANGE		=	\033[1;38;5;208m
+UP			=	\033[A
+CUT			=	\033[K
 
-CPPFLAGS	= -Wall -Wextra -Werror -MMD -MP -g3 -std=c++98 -c -I includes/ 
+# FLAGS
+CPPFLAGS	= -Wall -Wextra -Werror -g -std=c++98
 
-RM 			= rm -f
+# RULES
 
-all:	${NAME}
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDE)
+				@mkdir -p $(@D)
+				@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+				@echo "$(CUT)$(BLUE)clang $(RESET)$(notdir $@)"
+				@printf "$(UP)"
 
-${NAME} : ${OBJS}
-	${CXX} $^ -o $@
+$(TEST_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDE)
+				@mkdir -p $(@D)
+				@$(CC) $(CFLAGS) -I$(INC_DIR) -DSTD -c $< -o $@
+				@echo "$(CUT)$(BLUE)clang $(RESET)$(notdir $@)"
+				@printf "$(UP)"
 
-${OBJS} : ${DIR_OBJS}%.o: ${DIR_SRCS}%.cpp
-	mkdir -p ${@D}
-	${CXX} ${CPPFLAGS} $< -o $@
--include ${DEP}
+all:	$(NAME)
+
+$(NAME):		$(OBJS)
+				@$(CC) $(CFLAGS) $^ -o $@
+				@echo "$(CUT)$(GREEN)✔ $(NAME) created$(RESET)"
+
+fclean:	clean
+				@$(RM) $(NAME) diff.log ft_test.log std_test.log
+				@echo "$(RED)✘ fclean$(RESET)"
+
+test:	$(NAME_TEST)
+
+DIFF			=	-@diff -sc --suppress-common-lines ft_test.log std_test.log
+
+$(NAME_TEST):	$(OBJS) $(STD_OBJS)
+				@$(CC) $(CFLAGS) $(STD_OBJS) -o $(NAME_TEST)
+				@./$(NAME_TEST) > std_test.log
+				@$(RM) $(STD_OBJS) $(TEST_DIR)
+				@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+				@./$(NAME) > ft_test.log
+				@$(RM) $(OBJS) $(OBJS_DIR)
+				@$(DIFF) > diff.log
+				@$(DIFF)
+				@rm ft_test.log std_test.log $(NAME) $(NAME_TEST)
 
 clean:
-	${RM} -r ${DIR_OBJS}
+				@$(RM) $(OBJS) $(OBJS_DIR)
+				@echo "$(RED)✘ clean$(RESET)"
 
-fclean: clean
-	${RM} ${NAME}
 
-re: fclean all
 
-.PHONY: all clean fclean re
+re:		fclean all
+
+.PHONY:	all clean fclean re test diff

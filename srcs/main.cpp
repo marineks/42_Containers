@@ -1,11 +1,11 @@
-#include "srcs/stack.hpp"
+#include "Stack.hpp"
 // #include "vector.hpp"
 // #include "map.hpp"
 // #include "set.hpp"
 
 #include <iostream>
 
-#include "unit_tests/stack_test.cpp"
+#include "/mnt/nfs/homes/msanjuan/Documents/Projets_Github/42_Containers/unit_tests/stack_test.cpp"
 
 void	runAllTests()
 {

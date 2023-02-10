@@ -1,7 +1,8 @@
 // #include "stack.hpp"
-#include "../srcs/stack.hpp"
+#include "Stack.hpp"
 #include <stack>
 #include <string>
+#include <iostream>
 
 /* ANSI Colors */
 # define CYAN "\e[0;36m"
@@ -25,8 +26,7 @@ void	RunStackTests()
 	ft::stack<int> f_int; /* f stands for FAKE */
 	std::stack<int> t_int; /* T stands for TRUE */
 
-	
-	// std::string testName = "[INT] stack.push(10)";
+	/**/
 	f_int.push(10);
 	t_int.push(10);
 	EXPECT_EQ("[INT] stack.push(10) - SIZE()", f_int.size(), t_int.size());
