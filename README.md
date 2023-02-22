@@ -1,6 +1,6 @@
 # 42_Containers
 Prompt : recode c++ containers from scratch
-
+(petit brol de liens, tutos et autre pour mes amis franglais)
 
 ## About the project
 
@@ -185,6 +185,58 @@ std::ptrdiff_t is the signed integer type of the result of subtracting two point
 Resources :
 - [Iterator traits page on cplusplus](https://cplusplus.com/reference/iterator/iterator_traits/)
 - [Iterator traits page on cppreference](https://en.cppreference.com/w/cpp/iterator/iterator_traits)
+
+
+#### b. Reverse iterator
+
+> "std::reverse_iterator is an iterator adaptor that reverses the direction of a given iterator. In other words, when provided with a bidirectional iterator, std::reverse_iterator produces a new iterator that moves from the end to the beginning of the sequence defined by the underlying bidirectional iterator."
+
+Resources :
+- [polytechnique (EN)](https://www.enseignement.polytechnique.fr/informatique/INF478/docs/Cpp/en/cpp/iterator/reverse_iterator.html)
+- [cplusplus (EN)](https://cplusplus.com/reference/iterator/reverse_iterator/reverse_iterator/)
+
+=> Todo : dire que la doc (sur cpp preference surtout) est super bien documentée, y a pas de piege, faut juste suivre
+Attention ne pas oublier que c'est reverse, donc quand on fait les overload d'operateur,ne pas oublier d'inverser! (+ au lieu de - par exple)
+
+#### c. Other functions
+
+##### SFINAE notion
+> "Substitution Failure Is Not An Error"
+=> mécanisme du compilateur pour ignorer certaines instanciations de fonction ou de classe qui ne compilent pas, sans pour autant émettre une erreur de compilation.
+
+Ressources :
+- [cpp preference](https://en.cppreference.com/w/cpp/language/sfinae)
+- [Article de J.Poelen sur la notion + exemples pour mieux gérer (FR)](https://jonathanpoelen.github.io/2020/04/sfinae/)
+- [Article d'une fac canadienne (FR)](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/SFINAE.html)
+- [Wiki EN parce que pourquoi pas](https://en.wikipedia.org/wiki/Substitution_failure_is_not_an_error)
+
+
+Le principe de substitution, késako ? Par exemple, si une fonction dépend d'un paramètre template, le compilateur va substituer le template par le type de l'expression à la compilation.
+```cpp
+template<typename T>
+void	test(T value);
+
+test("baz"); // <= à la compilation, T sera remplacé par char const * et value par "baz"
+```
+
+Sur ce principe, on est d'accord que si on a deux fonctions `test` de proto différents, le compilateur choisira la "version" de `test` la plus adaptée...
+
+Mais que se passe-t-il si le compilateur peut utiliser les deux fonctions test ?
+```cpp
+template<typename T>
+void	test(T value);
+
+void	test(char const *value);
+
+test("baz");
+```
+Et bien dans le mille Emile, ca trigger une erreur (`error: call to 'test' is ambiguous`).
+
+***Ok, mais pourquoi nous parle-t-elle de SFINAE la dame, c'est quoi le rapport?***
+<p align="left">
+<img src="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F021%2F464%2F14608107_1180665285312703_1558693314_n.jpg"  width="30%">
+</p>
+J'y viens ! Ca tient en deux mots : std::enable_if et std::is_integral :innocent:
 
 #### (3) Vector
 
